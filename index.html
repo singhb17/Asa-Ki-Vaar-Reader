@@ -139,7 +139,7 @@
           margin-bottom: 0px;
         }
 
-      #darkModeToggle {
+      #darkModeToggle, #noSleepToggle{
         background: #e9ecef;
         border: 1px solid #6c757d;
         border-radius: 6px;
@@ -158,25 +158,25 @@
         transition: all 0.2s ease;
       }
 
-      #darkModeToggle:hover {
+      #darkModeToggle:hover, #noSleepToggle:hover {
         background: #d3d6da;
         border-color: #5a6268;
         transform: translateY(-1px);
       }
 
-      body.dark-mode #darkModeToggle {
+      body.dark-mode #darkModeToggle, body.dark-mode #noSleepToggle {
         background: #3c3c3c;
         border-color: #8a8a8a;
         color: #e0e0e0;
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
       }
 
-      body.dark-mode #darkModeToggle:hover {
+      body.dark-mode #darkModeToggle:hover, body.dark-mode #noSleepToggle:hover {
         background: #4a4a4a;
         border-color: #a0a0a0;
       }
 
-      #darkModeToggle:hover {
+      #darkModeToggle:hover, #noSleepToggle:hover {
         transform: scale(1.1);
       }
 
@@ -230,7 +230,7 @@
     />
   </head>
   <body>
-    <script src="../Asa Ki Vaar Reader/lib/NoSleep.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nosleep.js@0.12.0/dist/NoSleep.min.js"></script>
     <div class="container">
       <div class="header">
         <h1 class="title">ਆਸਾ ਕੀ ਵਾਰ</h1>
@@ -240,8 +240,8 @@
             <button id="darkModeToggle" aria-label="Toggle dark mode">
               <span class="options-text">Light Mode ☀️</span>
             </button>
-             <button id="darkModeToggle" class="noSleep-toggle" aria-label="Toggle dark mode">
-              <span class="options-text" id="nosleep-text">Keep Screen On: ❌</span>
+             <button id="noSleepToggle" class="noSleep-toggle">
+              <span id="nosleep-text" class="options-text">Keep Screen On: ❌</span>
             </button>
         </div>
       </div>
@@ -255,8 +255,8 @@
       var noSleep = new NoSleep();
 
       var wakeLockEnabled = false;
-      var toggleEl = document.querySelector(".noSleep-toggle");
-      var nosleepText = document.querySelector("#nosleep-text");
+      var toggleEl = document.getElementById("noSleepToggle");
+      var nosleepText = document.getElementById("nosleep-text");
 
       toggleEl.addEventListener('click', function() {
         if (!wakeLockEnabled) {
