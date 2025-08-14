@@ -82,7 +82,7 @@
         border-color: #6c757d;
       }
 
-      .toggle-icon {
+      .options-text {
         font-weight: bold;
         font-size: 1rem;
         color: #000000;
@@ -180,7 +180,7 @@
         transform: scale(1.1);
       }
 
-      body.dark-mode .toggle-icon{
+      body.dark-mode .options-text{
         color: #FFFFFF;
       }
 
@@ -223,12 +223,14 @@
         color: #a0a0a0;
       }
     </style>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
+    <script src="../Asa Ki Vaar Reader/lib/NoSleep.min.js"></script>
     <div class="container">
       <div class="header">
         <h1 class="title">ਆਸਾ ਕੀ ਵਾਰ</h1>
@@ -236,7 +238,10 @@
 
           <div class="dark-mode-toggle">
             <button id="darkModeToggle" aria-label="Toggle dark mode">
-              <span class="toggle-icon">Light Mode ☀️</span>
+              <span class="options-text">Light Mode ☀️</span>
+            </button>
+             <button id="darkModeToggle" class="noSleep-toggle" aria-label="Toggle dark mode">
+              <span class="options-text" id="nosleep-text">Keep Screen On: ❌</span>
             </button>
         </div>
       </div>
@@ -245,6 +250,28 @@
         <div id="bottom-text"><b>Waheguru Ji Ka Khalsa! Waheguru Ji Ki Fateh!</b><br>
           Simple Asa Ki Vaar Reader developed by Binwant Singh. I made it since I have the main chunks of the shabads memorized but during keertan, I tend to forget the what the next one is. This helps with staying on track, and working towards acheiving complete memorization. Bhul Chuk Maaf Karni Ji.
       </div>
+
+    <script>
+      var noSleep = new NoSleep();
+
+      var wakeLockEnabled = false;
+      var toggleEl = document.querySelector(".noSleep-toggle");
+      var nosleepText = document.querySelector("#nosleep-text");
+
+      toggleEl.addEventListener('click', function() {
+        if (!wakeLockEnabled) {
+          noSleep.enable(); // keep the screen on!
+          wakeLockEnabled = true;
+          nosleepText.textContent = "Keep Screen On: ✅";
+          // nosleepText.style.color = "#609c63"; // dark green
+        } else {
+          noSleep.disable(); // let the screen turn off.
+          wakeLockEnabled = false;
+          nosleepText.textContent = "Keep Screen On: ❌";
+          // nosleepText.style.color = "#E57373"; // dark red
+        }
+      }, false);
+    </script>
     <script>
 
       const groupedVerses = [
@@ -511,7 +538,7 @@
         const body = document.body;
         body.classList.toggle("dark-mode");
         const isDarkMode = body.classList.contains("dark-mode");
-        document.querySelector("#darkModeToggle .toggle-icon").textContent = isDarkMode ? "Dark Mode 🌙" : "Light Mode ☀️";
+        document.querySelector("#darkModeToggle .options-text").textContent = isDarkMode ? "Dark Mode 🌙" : "Light Mode ☀️";
         localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
       }
 
@@ -519,7 +546,7 @@
         const darkModePreference = localStorage.getItem("darkMode");
         if (darkModePreference === "enabled") {
           document.body.classList.add("dark-mode");
-          document.querySelector("#darkModeToggle .toggle-icon").textContent = "Dark Mode 🌙";
+          document.querySelector("#darkModeToggle .options-text").textContent = "Dark Mode 🌙";
         }
       }
 
